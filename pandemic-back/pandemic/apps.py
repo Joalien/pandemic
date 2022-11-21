@@ -9,5 +9,5 @@ class MyAppConfig(AppConfig):
 
     def ready(self):
         if os.environ.get('RUN_MAIN'):
-            from pandemic.Controller import play_game
+            from pandemic.game import play_game
             play_game()

@@ -14,8 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
+
+from pandemic.view.OutputView.APIView import WorldViewSet, PlayerViewSet, CityViewSet
+
+router = routers.SimpleRouter()
+router.register('worlds', WorldViewSet, basename='worlds')
+router.register('players', PlayerViewSet, basename='players')
+router.register('cities', CityViewSet, basename='cities')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls))
 ]

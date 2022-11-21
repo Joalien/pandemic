@@ -2,11 +2,11 @@ import functools
 import random
 from typing import List, Tuple
 
+from pandemic.models import City, EpidemicCard, Color, Player, World, DiseaseCard, PlayerCard, \
+    OutOfDiseaseCardError
 from pandemic.view.InputView.DummyInputView import DummyInputView
 from pandemic.view.OutputView.ConsoleOutputView import ConsoleOutputView
 from pandemic.view.OutputView.OutputView import OutputView
-from pandemic.models import City, Card, EpidemicCard, Color, Player, World, DiseaseCard, PlayerCard, \
-    OutOfDiseaseCardError
 
 MAX_NUMBER_OF_DISEASE: int = 24
 MAX_NUMBER_OF_OUTBREAK: int = 8
@@ -24,7 +24,6 @@ def play_game():
             pass
     except OutOfDiseaseCardError:
         OutputView.INSTANCE.show_message("You lose because all disease cards have been discarded")
-        print(World.objects.all())
 
 
 def play_turn(world) -> bool:
@@ -55,7 +54,7 @@ def propagate_diseases(world) -> int:
     number_of_outbreak = 0
     for _ in range(world.spreading_rate):
         city: City = pick_disease_card(world)
-        OutputView.INSTANCE.show_message(f'An disease happened in {city.name}')
+        OutputView.INSTANCE.show_message(f'A disease happened in {city.name}')
         number_of_outbreak += infect_city(city, Color(city.color), 1)
         cities_that_spread_during_turn.clear()
     return number_of_outbreak
@@ -181,18 +180,18 @@ def init_players(world: World, number_of_player: int, starting_city: City):
 
 
 def init_cities(world: World):
-    santiago = City(world=world, name="Santiago", color=Color.YELLOW, position=(60, 294))
-    lima = City(world=world, name="Lima", color=Color.YELLOW, position=(60, 294))
-    mexico = City(world=world, name="Mexico", color=Color.YELLOW, position=(125, 318))
-    los_angeles = City(world=world, name="Los Angeles", color=Color.YELLOW, position=(60, 294))
-    miami = City(world=world, name="Miami", color=Color.YELLOW, position=(60, 294))
-    bogota = City(world=world, name="Bogota", color=Color.YELLOW, position=(60, 294))
-    buenos_aires = City(world=world, name="Buenos Aires", color=Color.YELLOW, position=(60, 294))
-    sao_paulo = City(world=world, name="Sãu Paulo", color=Color.YELLOW, position=(60, 294))
-    lagos = City(world=world, name="Lagos", color=Color.YELLOW, position=(60, 294))
-    kinshasa = City(world=world, name="Kinshasa", color=Color.YELLOW, position=(60, 294))
-    khartoum = City(world=world, name="Khartoum", color=Color.YELLOW, position=(60, 294))
-    johannesburg = City(world=world, name="Johannesburg", color=Color.YELLOW, position=(60, 294))
+    santiago = City(world=world, name="Santiago", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
+    lima = City(world=world, name="Lima", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
+    mexico = City(world=world, name="Mexico", color=Color.YELLOW, position=({'x': 125, 'y': 318}))
+    los_angeles = City(world=world, name="Los Angeles", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
+    miami = City(world=world, name="Miami", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
+    bogota = City(world=world, name="Bogota", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
+    buenos_aires = City(world=world, name="Buenos Aires", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
+    sao_paulo = City(world=world, name="Sãu Paulo", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
+    lagos = City(world=world, name="Lagos", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
+    kinshasa = City(world=world, name="Kinshasa", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
+    khartoum = City(world=world, name="Khartoum", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
+    johannesburg = City(world=world, name="Johannesburg", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
 
     santiago.save()
     lima.save()

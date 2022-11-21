@@ -1,8 +1,8 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 
 
 class Action(ABC):
 
-    @abstractmethod
-    def execute_action(self, world, arg) -> bool:
+    @staticmethod
+    def execute_action(**kwargs) -> bool:
         pass
