@@ -2,8 +2,6 @@ import os
 
 from django.apps import AppConfig
 
-from pandemic import controller
-
 
 class MyAppConfig(AppConfig):
     name = 'pandemic'
@@ -11,5 +9,5 @@ class MyAppConfig(AppConfig):
 
     def ready(self):
         if os.environ.get('RUN_MAIN'):
-            controller.start_game()
-
+            from pandemic.Controller import play_game
+            play_game()

@@ -1,4 +1,4 @@
-from pandemic.View.OutputView.OutputView import OutputView
+from pandemic.view.OutputView.OutputView import OutputView
 
 
 class ConsoleOutputView(OutputView):

@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
 
-from pandemic.model.World import World
-
 
 class Action(ABC):
 

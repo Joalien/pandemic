@@ -1,9 +1,7 @@
 from typing import List, Callable
 
 from pandemic.model.Action.Action import Action
-from pandemic.model.Card.CityCard import CityCard
-from pandemic.model.City import City
-from pandemic.model.World import World
+from pandemic.models import City, CityCard, World
 
 
 class MoveToAnotherResearchCenter(Action):
