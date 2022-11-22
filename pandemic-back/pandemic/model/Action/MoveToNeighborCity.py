@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from pandemic.model.Action.Action import Action
 from pandemic.models import City, Player
 from pandemic.view.OutputView.OutputView import OutputView
@@ -6,12 +8,12 @@ from pandemic.view.OutputView.OutputView import OutputView
 class MoveToNeighborCity(Action):
 
     @staticmethod
-    def execute_action(**kwargs) -> bool:
+    def execute_action(**kwargs) -> Tuple[bool, str]:
         city = kwargs['city']
         player = kwargs['player']
         if isinstance(city, City) and isinstance(player, Player) and city in player.position.neighbors.all():
             OutputView.INSTANCE.show_message(f'Moving from {player.position.name} to {city.name}')
             player.position = city
             player.save()
-            return True
-        return False
+            return True, ''
+        return False, f'Player cannot move to city {city.name}'

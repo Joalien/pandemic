@@ -1,4 +1,7 @@
+from typing import Tuple
+
 from django.db import transaction
+from django.http import HttpResponseBadRequest
 from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -36,12 +39,12 @@ class PlayerViewSet(ModelViewSet):
     def get_queryset(self):
         return Player.objects.filter(world=self.request.GET.get('world_id'))
 
-    @action(detail=True, methods=['put'], url_path='/move_to/{id}')
-    def move_player_to_city(self, request, pk):
-        player = Player.objects.get()  # url attribute TODO
-        city = City.objects.get()  # url attribute TODO {id}
-        MoveToNeighborCity.execute_action(player=player, city=city)
-        return Response()
+    @action(detail=True, methods=['get'], url_path='move_to/(?P<city_id>\d+)')
+    def move_player_to_city(self, request, pk: int, city_id: int):
+        player: Player = Player.objects.filter(id=pk).first()
+        city: City = City.objects.filter(id=city_id).first()
+        result: Tuple[bool, str] = MoveToNeighborCity.execute_action(player=player, city=city)
+        return Response() if result[0] else HttpResponseBadRequest(result[1])
 
 
 class CityViewSet(ModelViewSet):

@@ -29,9 +29,9 @@ def play_game():
 def play_turn(world) -> bool:
     OutputView.INSTANCE.show_message(str(world))
     for _ in range(4):  # execute 4 actions
-        action, arg = input_view.get_action()  # Because python does not have do-while mechanism
-        while not action.execute_action(world, arg):
-            action, arg = input_view.get_action()
+        action, arg = input_view.get_action(world=world)  # Because python does not have do-while mechanism
+        while not action.execute_action(player=world.current_player, city=arg):  # TODO change design
+            action, arg = input_view.get_action(world=world)
     for _ in range(2):  # pick 2 cards
         player_picked_epidemic_card = pick_player_card(world.player_cards, world.current_player)
         if player_picked_epidemic_card:
