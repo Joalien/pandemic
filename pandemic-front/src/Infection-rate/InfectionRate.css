@@ -3,10 +3,10 @@
 }
 
 .infection-rate {
-  background: url('https://x.boardgamearena.net/data/themereleases/current/games/pandemic/210820-1019/img/token_sprites.png');
+  background-image: url('https://x.boardgamearena.net/data/themereleases/current/games/pandemic/210820-1019/img/token_sprites.png');
   background-position: -36px -177px;
   position: absolute;
-  left: 602px;
+  left: calc(602px + 34px * var(--index));
   top: 140px;
   height: 32px;
   width: 32px;

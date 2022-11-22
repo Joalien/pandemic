@@ -33,19 +33,22 @@ def play_turn(world) -> bool:
         while not action.execute_action(player=Player.objects.filter(world=world, is_current_player=True).first(), city=arg):  # TODO change design
             action, arg = input_view.get_action(world=world)
     for _ in range(2):  # pick 2 cards
-        player_picked_epidemic_card = pick_player_card(world.player_cards, Player.objects.filter(world=world, is_current_player=True).first())
-        if player_picked_epidemic_card:
+        player_has_picked_epidemic_card: bool = pick_player_card(world.player_cards, Player.objects.filter(world=world, is_current_player=True).first())
+        if player_has_picked_epidemic_card:
             world.current_spreading_rate += 1
+            world.save()
 
             city = pick_first_disease_card(world)
             OutputView.INSTANCE.show_message(f'An new epidemic happened in {city.name}!')
             world.number_of_outbreak += infect_city(city, Color(city.color), MAX_NUMBER_OF_SAME_DISEASE_IN_CITY)
+            world.save()
 
             random.shuffle(world.discard_disease_cards)
             for _ in range(len(world.discard_disease_cards)):
                 world.disease_cards.append(world.discard_disease_cards.pop())
 
     world.number_of_outbreak += propagate_diseases(world)
+    world.save()
 
     return next_turn(world)
 

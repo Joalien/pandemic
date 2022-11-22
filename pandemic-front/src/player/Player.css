@@ -3,11 +3,12 @@
 }
 
 .player {
-  background: url('https://x.boardgamearena.net/data/themereleases/current/games/pandemic/210820-1019/img/token_sprites.png');
+  background-image: url('https://x.boardgamearena.net/data/themereleases/current/games/pandemic/210820-1019/img/token_sprites.png');
   background-position: -162px -134px;
   position: absolute;
   height: 28px;
   width: 13px;
+  top: -3px;
 }
 
 .current-player {

@@ -1,10 +1,10 @@
 import './InfectionRate.css';
 
 
-export function InfectionRate(props) {
+export default function InfectionRate(props) {
     console.log("InfectionRate is rendering... " + props.index)
 
     return (
-        <div className={`infection-rate animated`} ></div>
+        <div style={{'--index': props.current_spreading_rate}} className={`infection-rate`} ></div>
     )
 }

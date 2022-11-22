@@ -1,18 +1,18 @@
 import './Board.css';
 import board_background from './board.webp'
-import {Player} from "../player/Player";
 import {BoardService} from "../services/BoardService"
-import {InfectionRate} from "../Infection-rate/InfectionRate";
+import InfectionRate from "../Infection-rate/InfectionRate";
 import {useEffect, useState} from "react";
 import {City} from "../city/City";
+import DiseaseCard from "../DiseaseCard/DiseaseCard";
 
 
-const worldId = 111;
+const worldId = 115;
 
 export default function Board() {
     let [board, setBoard] = useState({
         'id': undefined,
-        'spreading_rate': undefined,
+        'current_spreading_rate': undefined,
         'number_of_outbreak': undefined,
         'are_antidotes_found': undefined,
         'current_player': undefined,
@@ -42,7 +42,8 @@ export default function Board() {
 
     return (
         <div style={{backgroundImage: `url(${board_background})`, backgroundRepeat: "no-repeat"}} className='Board'>
-            <InfectionRate index={0}></InfectionRate>
+            <InfectionRate current_spreading_rate={board.current_spreading_rate}></InfectionRate>
+            <DiseaseCard></DiseaseCard>
             <ul>
                 {cities.map(city => <li><City key={city.id} city={city} players={players.filter(p => p.city.id === city.id)}></City></li>)}
             </ul>

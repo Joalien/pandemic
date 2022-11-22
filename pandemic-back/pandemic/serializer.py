@@ -37,5 +37,5 @@ class WorldSerializer(ModelSerializer):
 
     class Meta:
         model = World
-        fields = ['id', 'spreading_rate', 'number_of_outbreak', 'are_antidotes_found', 'current_player', 'players',
+        fields = ['id', 'current_spreading_rate', 'number_of_outbreak', 'are_antidotes_found', 'players',
                   'player_cards', 'disease_cards', 'cities']

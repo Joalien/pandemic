@@ -1,0 +1,34 @@
+.card {
+  height: 102px;
+  background-image: url('https://x.boardgamearena.net/data/themereleases/current/games/pandemic/210820-1019/img/card-infection.jpg');
+  background-position: 0 -916px;
+  width: 142px;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  left: 571px;
+  top: 31px;
+  position: absolute;
+  background-size: 1200%;
+
+}
+
+.back {
+}
+
+.front {
+}
+
+.scene {
+  perspective: 600px;
+}
+
+.card.flip {
+  transform: translateX(163px) rotateY(180deg);
+
+}
+
+
+@keyframes flip {
+  from { transform: rotateY(0) translateX(0); }
+  to   { transform: rotateY(180deg) translateX(calc(250px + 50px)); }
+}
