@@ -21,8 +21,8 @@ from pandemic.view.OutputView.APIView import WorldViewSet, PlayerViewSet, CityVi
 
 router = routers.SimpleRouter()
 router.register('worlds', WorldViewSet, basename='worlds')
-router.register('players', PlayerViewSet, basename='players')
-router.register('cities', CityViewSet, basename='cities')
+router.register('worlds/(?P<world_id>\d+)/players', PlayerViewSet, basename='players')
+router.register('worlds/(?P<world_id>\d+)/cities', CityViewSet, basename='cities')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

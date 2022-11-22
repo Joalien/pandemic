@@ -37,10 +37,10 @@ class PlayerViewSet(ModelViewSet):
     serializer_class = PlayerSerializer
 
     def get_queryset(self):
-        return Player.objects.filter(world=self.request.GET.get('world_id'))
+        return Player.objects.filter(world=self.kwargs['world_id'])
 
     @action(detail=True, methods=['PUT'], url_path='move_to/(?P<city_id>\d+)')
-    def move_player_to_city(self, request, pk: int, city_id: int):
+    def move_player_to_city(self, request, pk, city_id: int):
         player: Player = Player.objects.filter(id=pk).first()
         city: City = City.objects.filter(id=city_id).first()
         result: Tuple[bool, str] = MoveToNeighborCity.execute_action(player=player, city=city)
@@ -51,4 +51,4 @@ class CityViewSet(ModelViewSet):
     serializer_class = CitySerializer
 
     def get_queryset(self):
-        return City.objects.filter(world=self.request.GET.get('world_id'))
+        return City.objects.filter(world=self.kwargs['world_id'])

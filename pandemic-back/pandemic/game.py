@@ -30,10 +30,10 @@ def play_turn(world) -> bool:
     OutputView.INSTANCE.show_message(str(world))
     for _ in range(4):  # execute 4 actions
         action, arg = input_view.get_action(world=world)  # Because python does not have do-while mechanism
-        while not action.execute_action(player=world.current_player, city=arg):  # TODO change design
+        while not action.execute_action(player=Player.objects.filter(world=world, is_current_player=True).first(), city=arg):  # TODO change design
             action, arg = input_view.get_action(world=world)
     for _ in range(2):  # pick 2 cards
-        player_picked_epidemic_card = pick_player_card(world.player_cards, world.current_player)
+        player_picked_epidemic_card = pick_player_card(world.player_cards, Player.objects.filter(world=world, is_current_player=True).first())
         if player_picked_epidemic_card:
             world.current_spreading_rate += 1
 
@@ -87,8 +87,11 @@ def merge_dict(a: dict[Color, int], b: dict[Color, int]) -> dict[Color, int]:
 
 
 def next_player(world):
-    world.current_player = world.current_player.next_player
-    world.save()
+    player = Player.objects.filter(world=world, is_current_player=True).first()
+    player.is_current_player = False
+    player.save()
+    player.next_player.is_current_player = True
+    player.next_player.save()
 
 
 def infect_city(city: City, color: Color, number_of_disease: int) -> int:
@@ -144,7 +147,7 @@ def pick_player_card(player_cards: List[PlayerCard], player: Player) -> bool:
         return False
 
 
-def init_game(number_of_player=1, number_of_epidemic_card=6) -> World:
+def init_game(number_of_player=4, number_of_epidemic_card=6) -> World:
     world = World()
     world.save()
     init_cities(world)
@@ -170,28 +173,27 @@ def init_players_hand(world, initial_number_of_cards=8):
 
 
 def init_players(world: World, number_of_player: int, starting_city: City):
-    players = [Player(world=world, name=f'Player {i}', position=starting_city) for i in range(1, number_of_player + 1)]
+    players = [Player(world=world, name=f'Player {i}', city=starting_city) for i in range(1, number_of_player + 1)]
     for i in range(len(players)):
         players[i].save()
         players[i].next_player = players[(i + 1) % len(players)]
+    players[0].is_current_player = True
     [player.save() for player in players]
-    world.current_player = players[0]
-    world.save()
 
 
 def init_cities(world: World):
-    santiago = City(world=world, name="Santiago", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
-    lima = City(world=world, name="Lima", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
+    santiago = City(world=world, name="Santiago", color=Color.YELLOW, position=({'x': 182, 'y': 527}))
+    lima = City(world=world, name="Lima", color=Color.YELLOW, position=({'x': 173, 'y': 450}))
     mexico = City(world=world, name="Mexico", color=Color.YELLOW, position=({'x': 125, 'y': 318}))
-    los_angeles = City(world=world, name="Los Angeles", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
-    miami = City(world=world, name="Miami", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
-    bogota = City(world=world, name="Bogota", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
-    buenos_aires = City(world=world, name="Buenos Aires", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
-    sao_paulo = City(world=world, name="Sãu Paulo", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
-    lagos = City(world=world, name="Lagos", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
-    kinshasa = City(world=world, name="Kinshasa", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
-    khartoum = City(world=world, name="Khartoum", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
-    johannesburg = City(world=world, name="Johannesburg", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
+    los_angeles = City(world=world, name="Los Angeles", color=Color.YELLOW, position=({'x': 60, 'y': 294}))
+    miami = City(world=world, name="Miami", color=Color.YELLOW, position=({'x': 203, 'y': 307}))
+    bogota = City(world=world, name="Bogota", color=Color.YELLOW, position=({'x': 198, 'y': 376}))
+    buenos_aires = City(world=world, name="Buenos Aires", color=Color.YELLOW, position=({'x': 255, 'y': 514}))
+    sao_paulo = City(world=world, name="Sãu Paulo", color=Color.YELLOW, position=({'x': 295, 'y': 461}))
+    lagos = City(world=world, name="Lagos", color=Color.YELLOW, position=({'x': 429, 'y': 364}))
+    kinshasa = City(world=world, name="Kinshasa", color=Color.YELLOW, position=({'x': 473, 'y': 412}))
+    khartoum = City(world=world, name="Khartoum", color=Color.YELLOW, position=({'x': 517, 'y': 352}))
+    johannesburg = City(world=world, name="Johannesburg", color=Color.YELLOW, position=({'x': 512, 'y': 482}))
 
     santiago.save()
     lima.save()

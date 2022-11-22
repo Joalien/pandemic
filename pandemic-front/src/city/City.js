@@ -1,14 +1,15 @@
 import './City.css';
 import {Component} from "react";
+import {Player} from "../player/Player";
 
 
 
 export class City extends Component {
-    colorMapping = {
-        "Color.YELLOW": "yellow-disease",
-        "Color.BLACK": "black-disease",
-        "Color.BLUE": "blue-disease",
-        "Color.RED": "red-disease",
+    COLOR_MAPPING = {
+        "YELLOW": "yellow-disease",
+        "BLACK": "black-disease",
+        "BLUE": "blue-disease",
+        "RED": "red-disease",
     }
     diseasesArray = []
     styles = {
@@ -35,12 +36,15 @@ export class City extends Component {
                 <ul className='circle-container'>
                     {
                         this.diseasesArray.map((color, index) =>
-                            <li className={`disease ${this.colorMapping[color]}`}
+                            <li className={`disease ${this.COLOR_MAPPING[color]}`}
                                 style={{'--angle': `${360/this.diseasesArray.length*index}deg`}}
                                 key={index}
                             ></li>
                         )
                     }
+                </ul>
+                <ul className='players-container'>
+                    {this.props.players.map(player => <li className='player-container'><Player key={player.id} player={player}></Player></li>)}
                 </ul>
             </div>
         )

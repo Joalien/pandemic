@@ -23,9 +23,10 @@ class Color(models.TextChoices):
 
 class Player(models.Model):
     name = models.CharField(max_length=50)
-    position = models.ForeignKey('City', on_delete=models.CASCADE, related_name='players_in_city')
+    city = models.ForeignKey('City', on_delete=models.CASCADE, related_name='players_in_city')
     world = models.ForeignKey('World', on_delete=models.CASCADE, related_name='players')
     next_player = models.ForeignKey('self', null=True, on_delete=models.CASCADE, related_name='+')
+    is_current_player = models.BooleanField(default=False)
 
     # def __init__(self, name: str, position: City, *args, **kwargs):
     #     super().__init__(*args, **kwargs)
@@ -34,7 +35,7 @@ class Player(models.Model):
     #     self.hand: List[Card] = []
 
     def __str__(self):
-        return f'{self.name} ({self.position.name}) has {self.hand}'
+        return f'{self.name} ({self.city.name}) has {self.hand}'
 
     def __repr__(self):
         return self.__str__()
@@ -91,6 +92,7 @@ class City(models.Model):
     neighbors = models.ManyToManyField("self")
     diseases = models.JSONField(default=default_city_diseases)
     position = models.JSONField(default=default_position)
+    is_current_player = models.BooleanField(default=False)
 
     # def init(self, id, name: str, color: Color, position: (Tuple[int, int]), *args, **kwargs):
     #     super().__init__(*args, **kwargs)
@@ -135,7 +137,6 @@ class World(models.Model):
     current_spreading_rate = models.IntegerField(default=0)
     spreading_rates: List[int] = [2, 2, 2, 3, 3, 4, 4]
     are_antidotes_found = models.JSONField(default=default_antidotes)
-    current_player = models.OneToOneField('Player', null=True, on_delete=models.CASCADE, related_name='+')
 
     # def __init__(self, cities: List[City],
     #              players: List[Player],
@@ -169,7 +170,7 @@ class World(models.Model):
 
     def __str__(self):
         return f'''
-World:
+World {self.id} :
     Cities: 
 {os.linesep.join(map(lambda x: "        " + str(x), self.cities.all()))}
     Players: {self.players.all()}

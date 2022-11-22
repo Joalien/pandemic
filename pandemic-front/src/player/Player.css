@@ -1,0 +1,21 @@
+:root {
+  --index: 1
+}
+
+.player {
+  background: url('https://x.boardgamearena.net/data/themereleases/current/games/pandemic/210820-1019/img/token_sprites.png');
+  background-position: -162px -134px;
+  position: absolute;
+  height: 28px;
+  width: 13px;
+}
+
+.current-player {
+  animation: jump-in-place 1s linear infinite alternate;
+  z-index: 2;
+}
+
+@keyframes jump-in-place {
+  from { transform: translateY(0) }
+  to   { transform: translateY(-10px) }
+}

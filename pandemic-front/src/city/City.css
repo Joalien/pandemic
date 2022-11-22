@@ -19,7 +19,7 @@
 .disease {
   height: 20px;
   width: 20px;
-  animation: myOrbit 4s linear infinite;
+  animation: myOrbit 10s linear infinite;
 }
 
 .circle-container {
@@ -41,6 +41,19 @@
 
 .black-disease {
   background: url('https://x.boardgamearena.net/data/themereleases/current/games/pandemic/210820-1019/img/token_sprites.png') -221px -189px;
+}
+
+.players-container {
+  display: flex;
+  width: 100%;
+}
+
+.player-container {
+  display: flex;
+  width: 100%;
+  overflow: auto;
+  position: unset;
+  justify-content: center;
 }
 
 

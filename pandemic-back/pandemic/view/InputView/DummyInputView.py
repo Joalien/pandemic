@@ -9,4 +9,4 @@ from pandemic.models import City, Player
 class DummyInputView:
     @staticmethod
     def get_action(**kwargs) -> (Action, Any):
-        return MoveToNeighborCity(), random.choice(Player.objects.filter(world=kwargs['world']).first().position.neighbors.all())
+        return MoveToNeighborCity(), random.choice(Player.objects.filter(world=kwargs['world']).first().city.neighbors.all())

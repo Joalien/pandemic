@@ -11,9 +11,9 @@ class MoveToNeighborCity(Action):
     def execute_action(**kwargs) -> Tuple[bool, str]:
         city = kwargs['city']
         player = kwargs['player']
-        if isinstance(city, City) and isinstance(player, Player) and city in player.position.neighbors.all():
-            OutputView.INSTANCE.show_message(f'Moving from {player.position.name} to {city.name}')
-            player.position = city
+        if isinstance(city, City) and isinstance(player, Player) and city in player.city.neighbors.all():
+            OutputView.INSTANCE.show_message(f'Moving from {player.city.name} to {city.name}')
+            player.city = city
             player.save()
             return True, ''
         return False, f'Player cannot move to city {city.name}'
