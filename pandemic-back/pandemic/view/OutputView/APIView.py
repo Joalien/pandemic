@@ -39,8 +39,7 @@ class PlayerViewSet(ModelViewSet):
     def get_queryset(self):
         return Player.objects.filter(world=self.request.GET.get('world_id'))
 
-    # FIXME replace get by PUT
-    @action(detail=True, methods=['get'], url_path='move_to/(?P<city_id>\d+)')
+    @action(detail=True, methods=['PUT'], url_path='move_to/(?P<city_id>\d+)')
     def move_player_to_city(self, request, pk: int, city_id: int):
         player: Player = Player.objects.filter(id=pk).first()
         city: City = City.objects.filter(id=city_id).first()

@@ -6,7 +6,7 @@ from pandemic.models import World, City, Player, DiseaseCard, PlayerCard
 class CitySerializer(ModelSerializer):
     class Meta:
         model = City
-        fields = ['id', 'world_id', 'name', 'color', 'has_research_center', 'diseases', 'position']
+        fields = ['id', 'world_id', 'name', 'color', 'has_research_center', 'diseases', 'position', 'neighbors']
 
 
 class PlayerSerializer(ModelSerializer):
