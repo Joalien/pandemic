@@ -20,13 +20,13 @@ class PlayerSerializer(ModelSerializer):
 class DiseaseCardSerializer(ModelSerializer):
     class Meta:
         model = DiseaseCard
-        fields = ['id', 'world_id', 'city_id', 'name', 'index', 'card_ptr_id', 'is_discarded']
+        fields = ['id', 'world_id', 'city_id', 'name', 'index', 'is_discarded']
 
 
 class PlayerCardSerializer(ModelSerializer):
     class Meta:
         model = PlayerCard
-        fields = ['id', 'world_id', 'city_id', 'name', 'index', 'card_ptr_id', 'player_id']
+        fields = ['id', 'world_id', 'city_id', 'name', 'index', 'player_id']
 
 
 class WorldSerializer(ModelSerializer):

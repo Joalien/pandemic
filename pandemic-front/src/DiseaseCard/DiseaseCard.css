@@ -1,21 +1,24 @@
 .card {
-  height: 102px;
-  background-image: url('https://x.boardgamearena.net/data/themereleases/current/games/pandemic/210820-1019/img/card-infection.jpg');
-  background-position: 0 -916px;
-  width: 142px;
   transition: transform 1s;
   transform-style: preserve-3d;
+}
+
+.side {
+  height: 102px;
+  background-image: url('https://x.boardgamearena.net/data/themereleases/current/games/pandemic/210820-1019/img/card-infection.jpg');
+  width: 142px;
   left: 571px;
   top: 31px;
   position: absolute;
   background-size: 1200%;
-
 }
 
 .back {
+  background-position: 0 -407px;
 }
 
 .front {
+  background-position: calc(var(--index) * 142px) 0;
 }
 
 .scene {

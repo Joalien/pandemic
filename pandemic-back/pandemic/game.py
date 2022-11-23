@@ -241,7 +241,7 @@ def init_cities(world: World):
 def init_disease_cards(world):
     indexes = list(range(len(world.cities.all())))
     random.shuffle(indexes)
-    [DiseaseCard(world=world, city=city, index=indexes.pop()).save() for city in world.cities.all()]
+    [DiseaseCard(world=world, city=city, index=indexes.pop(), name=city.name).save() for city in world.cities.all()]
 
 
 def init_player_cards(world):
